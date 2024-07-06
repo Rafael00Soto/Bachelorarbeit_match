@@ -50,7 +50,7 @@ if __name__ == '__main__':
         position_topic = "mur620/mir_pose_simple"
         pose_subscriber= rospy.Subscriber(position_topic, Pose, poseCallback)
         time.sleep(2)
-        distance_to_move=3.0
+        distance_to_move=4.0
         move(velocity_publisher,1.0, distance_to_move)
     except rospy.ROSInterruptException:
         rospy.loginfo('node terminated.')
