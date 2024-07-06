@@ -1,0 +1,8 @@
+<launch>
+    <!-- Launch Gazebo-->
+    <include file="$(find match_gazebo)/launch/big_square.launch">
+    </include>
+    <include file="$(find mur_launch_sim)/launch/mur_620.launch"/>
+
+
+</launch>

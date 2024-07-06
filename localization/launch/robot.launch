@@ -1,0 +1,6 @@
+<launch>
+
+    <include file="$(find mur_launch_sim)/launch/mur_620.launch"/>
+ 
+</launch>
+

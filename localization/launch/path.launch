@@ -1,0 +1,6 @@
+
+<launch>
+    
+    <!-- Create straight path -->
+    <node pkg="move" type="mur_path_beispiel.py" name="straight line"  />
+</launch>
