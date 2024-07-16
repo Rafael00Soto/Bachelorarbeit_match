@@ -40,12 +40,12 @@ if __name__=="__main__":
     config=[]
     config.append([5,-3, 0])  
     config.append([-6,-5, 20])
-    config.append([9,-8, 40])
-    config.append([4,3,60])
-    config.append([3,-9,80])
+    config.append([2,-8, 40])
+    config.append([-4,3,60])
+    config.append([1,-9,80])
 
     doc = OpenDocumentSpreadsheet()
-    table = Table(name="Hoja1")
+    table = Table(name="Table1")
     
     columns = ["Cycle","Configuration number","Amcl Pose x", "Amcl Pose y", "Amcl Pose Orientation", "Ground Truth x", "Ground Truth y", "Ground Truth Orientation"]
     header_row = TableRow()
@@ -139,7 +139,7 @@ if __name__=="__main__":
                     row.addElement(cell)
 
                     table.addElement(row)
-    table2 = Table(name="Hoja2")
+    table2 = Table(name="Tabla2")
     header_row_table2= TableRow()
 
 
@@ -165,4 +165,4 @@ if __name__=="__main__":
             
 
     doc.spreadsheet.addElement(table)
-    doc.save("mi_hoja_de_calculo.ods")
+    doc.save("posiciones.ods")

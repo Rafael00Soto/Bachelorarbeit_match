@@ -47,7 +47,7 @@ def load_box_gazebo():
         """
 
         # Definir la posición inicial de la caja
-        initial_pose = Pose(Point(0, 3, 0.5), Quaternion(0, 0, 0, 0))
+        initial_pose = Pose(Point(2, 3, 0.5), Quaternion(0, 0, 0, 0))
 
         # Llamar al servicio para insertar el modelo en la simulación
         spawn_model_prox("box", box_sdf, "", initial_pose, "world")

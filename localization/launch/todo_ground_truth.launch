@@ -3,6 +3,7 @@
 	
 
 	<include file="$(find mur_launch_sim)/launch/mur_620.launch">
+	<arg name="localization_type" value="ground_truth"/>
 	</include>
     <node type="rviz" name="rviz" pkg="rviz" args="-d $(find mur_examples)/rviz/single_mur620_visualization.rviz" />
 	

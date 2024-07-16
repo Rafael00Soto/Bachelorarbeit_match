@@ -2,19 +2,25 @@
 
 import rospy
 from nav_msgs.msg import OccupancyGrid
+from map_msgs.msg import OccupancyGridUpdate
 import copy
 
 
 def map_callback(msg):
+    
+    resolution=msg.info.resolution
+
+    
     # Copia profunda del mensaje del OccupancyGrid para modificarlo
     updated_map = copy.deepcopy(msg)
 
+    updated_map.header.stamp = rospy.Time.now()
+    updated_map.header.frame_id = msg.header.frame_id 
     # Longitudes en metros del objeto
     length_x = 1.0
     length_y = 1.0
 
     # Obtener la información necesaria del OccupancyGrid
-    resolution = updated_map.info.resolution
     width = updated_map.info.width
     height = updated_map.info.height
     origin_x = updated_map.info.origin.position.x
@@ -51,15 +57,36 @@ def map_callback(msg):
         # Asignar la lista modificada de vuelta a updated_map.data
         updated_map.data = tuple(updated_data_list)
 
-        rospy.loginfo(f"Modificado el OccupancyGrid en ({x_center}, {y_center}) con un objeto de tamaño {length_x}x{length_y}")
-
         # Publicar el OccupancyGrid actualizado en el topic /map
         map_publisher.publish(updated_map)
+        rospy.loginfo(f"Modificado el OccupancyGrid")
+        
     else:
-        rospy.logwarn("Las coordenadas del objeto están fuera de los límites del mapa.")
+        rospy.logwarn("Las coordenadas del objeto están fuera de los límites del mapa.")                     
+    '''
+    new_map=OccupancyGridUpdate()
+    new_map.header.stamp = rospy.Time.now()
+    new_map.header.frame_id = msg.header.frame_id 
+    new_map.x=0
+    new_map.y=0
+    width_in_meters=3.0 # x direction
+    height_in_meters=3.0# y direction
+    #meters to number of cells
+    new_map.width= int(width_in_meters / resolution)
+    new_map.height= int(height_in_meters / resolution)
+    new_map.data=[100]*(new_map.width*new_map.height)
+    map_publisher.publish(new_map)
+    rospy.sleep(1.0)
+    
+    rospy.loginfo(f"Modificado el OccupancyGrid en ({new_map.x}, {new_map.y}) con un objeto de tamaño {width_in_meters}x{height_in_meters}")   '''
+    
+
+
+    
 
 
 if __name__ == '__main__':
+
     rospy.init_node('map_updater', anonymous=True)
 
     # Suscribirse al topic /map
@@ -67,5 +94,6 @@ if __name__ == '__main__':
 
     # Publicar en el mismo topic /map para actualizar el mapa
     map_publisher = rospy.Publisher('/map', OccupancyGrid, queue_size=10)
+    
 
     rospy.spin()
