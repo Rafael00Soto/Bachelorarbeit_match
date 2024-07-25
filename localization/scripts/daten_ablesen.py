@@ -139,29 +139,7 @@ if __name__=="__main__":
                     row.addElement(cell)
 
                     table.addElement(row)
-    table2 = Table(name="Tabla2")
-    header_row_table2= TableRow()
-
-
-    columns_table2 = ["Target Value x", "Target Value y", "Target Value Orientation"]
-    for column in columns_table2:
-        cell = TableCell()
-        cell.addElement(P(text=str(column)))
-        header_row_table2.addElement(cell)
-    table2.addElement(header_row_table2)
-    for point in config:
-         row=TableRow()
-         cell=TableCell()
-         cell.addElement(P(text=str(point[0])))
-         row.addElement(cell)
-         cell=TableCell()
-         cell.addElement(P(text=str(point[1])))
-         row.addElement(cell)
-         cell=TableCell()
-         cell.addElement(P(text=str(point[2])))
-         row.addElement(cell)
-    table2.addElement(row)
-     
+  
             
 
     doc.spreadsheet.addElement(table)

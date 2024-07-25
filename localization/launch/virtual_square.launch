@@ -1,8 +1,0 @@
-
-<launch>
-    <!-- Virtual walls server-->
-    <node pkg="virtual_walls" type="virtual_wall_server" name="virtual_wall_server" />
-
-    <!-- Create virtual square -->
-    <node pkg="virtual_walls" type="example1.py" name="virtual_square"  />
-</launch>
