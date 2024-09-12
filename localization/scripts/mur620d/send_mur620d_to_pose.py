@@ -5,16 +5,19 @@ import math
 from geometry_msgs.msg import PoseStamped
 from nav_msgs.msg import Odometry
 import tf.transformations
-from mbf_msgs.msg import MoveBaseAction, MoveBaseGoal
+from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
 
 #roslaunch mur_launch_hardware mur620d.launch launch_ur_r:=false launch_ur_l:=false
-
+#source catkin_ws_amcl/devel/setup.bash
+#systemctl start mocap
+#catkin_ws/src/match_mocap/mocap_toolbox/scripts
+#roslaunch mocap_toolbox transformation_mocap_amcl.launch
 if __name__ == "__main__":
     
     rospy.init_node("send_mur620d_to_pose")
     rospy.sleep(0.1)
-    client = actionlib.SimpleActionClient('/mur620d/move_base_flex/move_base', MoveBaseAction)  
+    client = actionlib.SimpleActionClient('/mur620d/move_base', MoveBaseAction)  
     rospy.loginfo("Waiting for move base flex server") 
     client.wait_for_server()
     goal_client = MoveBaseGoal()
@@ -22,8 +25,8 @@ if __name__ == "__main__":
 
     # Desired position
     goal = PoseStamped()
-    x_position = 38.5
-    y_position = 32.5
+    x_position = 31.3
+    y_position = 29.7
     angle_degrees = 0.0
     angle_radians = math.radians(angle_degrees)
     q = tf.transformations.quaternion_from_euler(0, 0, angle_radians)

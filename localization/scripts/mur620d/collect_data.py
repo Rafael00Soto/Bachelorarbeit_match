@@ -3,7 +3,7 @@ import rospy
 import actionlib
 from geometry_msgs.msg import PoseStamped, Pose
 import tf.transformations
-from mbf_msgs.msg import MoveBaseAction, MoveBaseGoal
+from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 
 from odf.opendocument import OpenDocumentSpreadsheet
 from odf.table import Table, TableRow, TableCell
@@ -24,24 +24,24 @@ def callback_amcl(pose_amcl):
 
 if __name__=="__main__":
     
-    rospy.init_node("define_goal_node", anonymous=True)
+    rospy.init_node("collect_data_goal", anonymous=True)
     rospy.sleep(0.1)
-    client = actionlib.SimpleActionClient('mur620d/move_base_flex/move_base', MoveBaseAction)
+    client = actionlib.SimpleActionClient('mur620d/move_base', MoveBaseAction)
     rospy.loginfo("Waiting for move base server")
     client.wait_for_server()
     goal_client=MoveBaseGoal()
 
     rospy.sleep(1.0)
     listener1=rospy.Subscriber("/mur620d/robot_pose",Pose, callback_amcl)
-    listener2=rospy.Subscriber("/qualisys_map/mur620d/pose",PoseStamped, callback_ground_truth)
+    listener2=rospy.Subscriber("qualisys_map/mur620d/pose",PoseStamped, callback_ground_truth)
 
     #Desired positions
     config=[]
-    config.append([38.8 ,30.5, 0])  
-    config.append([29.5 ,28.8 , 20])
-    config.append([32.5 ,42.0, 40])
-    config.append([40.6 ,35.5 ,60])
-    config.append([34.7, 32.0, 80])
+    config.append([33.8 ,30.11 , 180])
+    config.append([25.6 ,29.8, 25])  
+    config.append([34.0 ,33.0, 105])
+    config.append([25.3 ,32.7, 300])
+    config.append([29.2, 28.0, 15])
 
     doc = OpenDocumentSpreadsheet()
     table = Table(name="Table1")
@@ -55,7 +55,7 @@ if __name__=="__main__":
     table.addElement(header_row)
     
     goal = PoseStamped()
-    for j in range(1,31):
+    for j in range(1,21):
           for i in range (0,5):
                angle_degrees= config[i][2]
                angle_radians=math.radians(angle_degrees)

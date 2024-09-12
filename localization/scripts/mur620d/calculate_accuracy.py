@@ -43,7 +43,7 @@ def read_ods(file_path, sheet_name):
                     row_data.append(cell_value)
                 data.append(row_data)
 
-    #Correct error of duplicate numbers
+    #Correct error of duplicate numbers to avoid information lost
     data[1].insert(0, '1')
     data[7].insert(0, '2')
     data[13].insert(0, '3')
@@ -67,20 +67,14 @@ def read_ods(file_path, sheet_name):
 
 
 
- #Desired positions simulations
-'''configuration=[]
-configuration.append([5,-3, 0])  
-configuration.append([-6,-5, 20])
-configuration.append([2,-8, 40])
-configuration.append([-4,3,60])
-configuration.append([1,-9,80])'''
-#Desired positions experiemnts           COLOCAR LAS ACTUALES
+
+#Desired positions experiemnts          
 configuration=[]
-configuration.append([38.8 ,30.5, 0])  
-configuration.append([29.5 ,28.8, 20])
-configuration.append([32.5 ,42.0, 40])
-configuration.append([40.6 ,35.5 ,60])
-configuration.append([34.7, 32.0, 80])
+configuration.append([33.8 ,30.11 , 180])
+configuration.append([25.6 ,29.8, 25])  
+configuration.append([34.0 ,33.0, 105])
+configuration.append([25.3 ,32.7, 300])
+configuration.append([29.2, 28.0, 15])
 
 
 distances=[]
@@ -92,13 +86,14 @@ for x in range(0,5) :
         distances.append(error_position(configuration[x][0],configuration[x][1],configuration[x-1][0],configuration[x-1][1]))
     
 
+# Read file.ods
+file_path = '/home/rafass/Documents/Bachelorarbeit/Posiciones/mur620d/positions.ods'
+objects=[ "L1X6",
+         "L1x6_L1x4_joined", "L1x6_L1x4_joined_mapped",
+         "L1x5", "L1x5_mapped",
+         "L1x6_L1x4", "L1x6_L1x4_mapped"
+]
 
-file_path = '/home/rafass/Documents/Bachelorarbeit/Posiciones/mur620/positions_object.ods'
-objects=[ "0x0x0",
-         "0.5x1x1", "0.5x1x1_map",
-         "1x1x1", "1x1x1_map",
-         "2x1x1", "2x1x1_map",
-         "2x1.5x1", "2x1.5x1_map"] 
 number_decimals = 5
 
 # Columns Table 1
@@ -203,6 +198,14 @@ for dimension in objects:
             std_deviation_ori = data['Orientation Error'].std()
             std_deviation_ori=math.degrees(std_deviation_ori)
             std_deviation_ori = round(std_deviation_ori, number_decimals)
+
+########## TEST  #######################################
+            if dimension == "L1x6_L1x4_mapped":
+                print(dimension)
+                filtered_data = data[data['Configuration number'] == 2]
+                filtered_data['Orientation Error'].apply(lambda x: print(x))
+
+##########################################################
 
             row = TableRow()  # New Row
 
